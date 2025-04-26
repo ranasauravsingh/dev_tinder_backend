@@ -1,0 +1,28 @@
+{
+  "name": "dev_tinder_backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/app.js",
+    "start": "node src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ranasauravsingh/dev_tinder_backend.git"
+  },
+  "keywords": [
+    "Nodejs",
+    "Javascript",
+    "MongoDB"
+  ],
+  "author": "Saurav Singh Rana",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ranasauravsingh/dev_tinder_backend/issues"
+  },
+  "homepage": "https://github.com/ranasauravsingh/dev_tinder_backend#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
