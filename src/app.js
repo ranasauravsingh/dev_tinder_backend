@@ -30,18 +30,43 @@ const app = express();
 // });
 
 //? HTTP methods api functions
-app?.get("/users", (req, res) => {
-    res?.send({ message: "Users fetch successfully" });
-});
-app?.post("/users", (req, res) => {
-    res?.send({ message: "User created successfully" });
-});
-app?.delete("/users", (req, res) => {
-    res?.send({ message: "User deleted successfully" });
-});
-app?.patch("/users", (req, res) => {
-    res?.send({ message: "User data updated successfully" });
-});
+// app?.get("/users", (req, res) => {
+//     res?.send({ message: "Users fetch successfully" });
+// });
+// app?.post("/users", (req, res) => {
+//     res?.send({ message: "User created successfully" });
+// });
+// app?.delete("/users", (req, res) => {
+//     res?.send({ message: "User deleted successfully" });
+// });
+// app?.patch("/users", (req, res) => {
+//     res?.send({ message: "User data updated successfully" });
+// });
+
+//? Advanced Routing concepts
+// app?.get(/ab?c/, (req, res) => {
+//     res?.send({ message: "ab?c" });
+// });
+
+// app?.get(/ab+c/, (req, res) => {
+//     res?.send({ message: "ab+c" });
+// });
+
+// app?.get(/ab*cd/, (req, res) => {
+//     res?.send({ message: "ab*cd" });
+// });
+
+// app?.get("/abc", (req, res) => {
+
+//     //* "/abc?userId=9" will be in query params
+//     res?.send({ message: req?.query });
+// });
+
+// app?.get("/abc/:userId", (req, res) => {
+
+//     //* "/abc:userId=9" will be in params
+//     res?.send({ message: req?.params });
+// });
 
 app?.listen(7777, (req, res) => {
     console.log("Server is running on port 7777");
