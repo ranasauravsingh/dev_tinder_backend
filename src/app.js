@@ -1,58 +1,57 @@
 const express = require("express");
+const bcrypt = require("bcrypt");
 const connectDB = require("./config/database");
 const Users = require("./models/user.schema");
+const { validateSignUp } = require("./helpers/validation");
 
 const app = express();
 
 app.use(express.json());
 
-//? 1) Create a user
+//? 1) Create a user & login user
 app.post("/signup", async (req, res) => {
-	const userData = req.body;
+	const { firstName, age, emailId, password } = req.body;
 	try {
-		const ALLOWED_KEYS = ["firstName", "emailId", "password", "age"];
-		const isValidUserPayload = Object.keys(userData).every((key) =>
-			ALLOWED_KEYS.includes(key)
-		);
+		validateSignUp(req, res);
+		const passwordHash = await bcrypt.hash(password, 10);
 
-		if (!isValidUserPayload) {
-			return res.status(400).send({
-				message: "Invalid user data",
-			});
-		}
-
-		if (
-			!userData?.firstName ||
-			!userData?.emailId ||
-			!userData?.password ||
-			!userData?.age
-		) {
-			return res.status(400).send({
-				message:
-					"Please provide all required fields [firstName, emailId, password, age]",
-			});
-		}
-
-		const isFirstNameValid =
-			userData?.firstName?.length >= 4 &&
-			userData?.firstName?.length <= 20;
-		if (!isFirstNameValid) {
-			return res.status(400).send({
-				message: "First name should be between 4 to 20 characters",
-			});
-		}
-
-		const isAgeValid = userData?.age >= 18;
-		if (!isAgeValid) {
-			return res.status(400).send({
-				message: "Age should be greater than or equal to 18",
-			});
-		}
-
-		const user = new Users(userData);
+		const user = new Users({
+			firstName,
+			age,
+			emailId,
+			password: passwordHash,
+		});
 		await user.save();
 		res.status(200).send({
 			message: "User created successfully",
+		});
+	} catch (err) {
+		res.status(400).send({
+			message: `Something went wrong: ${err?.message}`,
+		});
+	}
+});
+
+app.post("/login", async (req, res) => {
+	const { emailId, password } = req.body;
+
+	try {
+		const user = await Users.findOne({ emailId: emailId });
+		if (!user) {
+			return res.status(400).send({
+				message: "Invalid Credentials",
+			});
+		}
+
+		const isPasswordValid = await bcrypt.compare(password, user.password);
+		if (!isPasswordValid) {
+			return res.status(400).send({
+				message: "Invalid Credentials",
+			});
+		}
+
+		res.send({
+			message: "Login Successful",
 		});
 	} catch (err) {
 		res.status(400).send({
