@@ -1,12 +1,16 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 const connectDB = require("./config/database");
 const Users = require("./models/user.schema");
 const { validateSignUp } = require("./helpers/validation");
+const userAuth = require("./middlewares/userAuth");
 
 const app = express();
 
-app.use(express.json());
+app.use(express.json()); //? Middleware to parse JSON data from request body
+app.use(cookieParser()); //? Middleware to parse cookies from request headers
 
 //? 1) Create a user & login user
 app.post("/signup", async (req, res) => {
@@ -43,16 +47,33 @@ app.post("/login", async (req, res) => {
 			});
 		}
 
-		const isPasswordValid = await bcrypt.compare(password, user.password);
+		const isPasswordValid = await user?.validatePassword(password);;
 		if (!isPasswordValid) {
 			return res.status(400).send({
 				message: "Invalid Credentials",
 			});
 		}
 
+		const token = await user?.getJWT();
+
+		res.cookie("token", token, {
+			expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+		});
 		res.send({
 			message: "Login Successful",
 		});
+	} catch (err) {
+		res.status(400).send({
+			message: `Something went wrong: ${err?.message}`,
+		});
+	}
+});
+
+//? 2) Get user profile
+app.get("/profile", userAuth, async (req, res) => {
+	try {
+		const fetchUser = req.user;
+		res.send(fetchUser);
 	} catch (err) {
 		res.status(400).send({
 			message: `Something went wrong: ${err?.message}`,
