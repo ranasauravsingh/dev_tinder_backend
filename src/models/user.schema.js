@@ -46,6 +46,10 @@ const userSchema = new mongoose.Schema(
 		},
 		gender: {
 			type: String,
+			enum: {
+				values: ["female", "male", "other"],
+				message: `{VALUE} is not a valid gender type`,
+			},
 			validate(value) {
 				//? Custom validation
 				if (!["female", "male", "other"].includes(value)) {
@@ -62,9 +66,21 @@ const userSchema = new mongoose.Schema(
 				}
 			},
 		},
+		about: {
+			type: String,
+			default: "Hello, I am using this app",
+			maxlength: 200,
+			validate(value) {
+				if (value && value.length > 200) {
+					throw new Error(
+						"About section should be less than 200 characters"
+					);
+				}
+			},
+		},
 		skills: {
 			type: [String],
-			enum: ["html", "css", "javascript", "react", "nodejs"],
+			// enum: ["html", "css", "javascript", "reactjs", "nodejs"],
 		},
 	},
 	{
