@@ -112,7 +112,32 @@ const validateProfileUpdate = (req, res) => {
 	}
 };
 
+const validateSendConnection = (req, res) => {
+	const fromUserId = req?.user?._id;
+	const { status, toUserId } = req?.params;
+
+	if (!fromUserId && !toUserId && !status) {
+		return res.status(400).send({
+			message: "Please provide all required fields [toUserId, status]",
+		});
+	}
+
+	if (fromUserId === toUserId) {
+		return res.status(400).send({
+			message: "You cannot send connection request to yourself",
+		});
+	}
+
+	const ALLOWED_PARAMS = ["ignored", "interested"];
+	if (!ALLOWED_PARAMS?.includes(status)) {
+		return res.status(400).send({
+			message: "Invalid status type: " + status,
+		});
+	}
+};
+
 module.exports = {
 	validateSignUp,
 	validateProfileUpdate,
+	validateSendConnection,
 };
