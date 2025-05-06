@@ -14,7 +14,7 @@
 <!-- send status ["interested", "ignored"] -->
 - POST /request/send/:status/:userId
 
-<!-- send status ["accepted", "rejected"] -->
+<!-- review status ["accepted", "rejected"] -->
 - POST /request/review/:status/:userId
 
 ## userRouter
