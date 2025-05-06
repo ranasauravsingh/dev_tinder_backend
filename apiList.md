@@ -11,10 +11,11 @@
 - PATCH /profile/password
 
 ## connectionRequestRouter
-- POST /request/send/interested/:userId
-- POST /request/send/ignored/:userId
-- POST /request/review/accepted/:userId
-- POST /request/review/rejected/:userId
+<!-- send status ["interested", "ignored"] -->
+- POST /request/send/:status/:userId
+
+<!-- send status ["accepted", "rejected"] -->
+- POST /request/review/:status/:userId
 
 ## userRouter
 - GET /user/connections
