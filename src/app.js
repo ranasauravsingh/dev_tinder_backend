@@ -8,6 +8,7 @@ const connectDB = require("./config/database");
 const profileRouter = require("./routes/profile.routing");
 const authRouter = require("./routes/auth.routing");
 const connectionRouter = require("./routes/request.routing");
+const userRouter = require("./routes/user.routing");
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(express.json()); //? Middleware to parse JSON data from request body
 app.use(cookieParser()); //? Middleware to parse cookies from request headers
 
 //? API's
+app.use(`/user`, userRouter);
 app.use(`/request`, connectionRouter);
 app.use(`/profile`, profileRouter);
 app.use(`/`, authRouter);
