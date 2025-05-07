@@ -1,7 +1,10 @@
 const express = require("express");
 
 //? Controllers
-const { sendConnectionRequest } = require("../controllers/request.controller");
+const {
+	sendConnectionRequest,
+	reviewConnectionRequest,
+} = require("../controllers/request.controller");
 
 //? Middlewares
 const userAuth = require("../middlewares/userAuth");
@@ -9,6 +12,15 @@ const userAuth = require("../middlewares/userAuth");
 const connectionRouter = express.Router();
 
 //* All api prefixes will be "/request" by default
-connectionRouter.post("/send/:status/:userId", userAuth, sendConnectionRequest);
+connectionRouter.post(
+	"/send/:status/:toUserId",
+	userAuth,
+	sendConnectionRequest
+);
+connectionRouter.post(
+	"/review/:status/:fromUserId",
+	userAuth,
+	reviewConnectionRequest
+);
 
 module.exports = connectionRouter;

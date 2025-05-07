@@ -136,8 +136,33 @@ const validateSendConnection = (req, res) => {
 	}
 };
 
+const validateReviewConnection = (req, res) => {
+	const toUserId = req?.user?._id;
+	const { status, fromUserId } = req?.params;
+
+	if (!fromUserId && !toUserId && !status) {
+		return res.status(400).send({
+			message: "Please provide all required fields [fromUserId, status]",
+		});
+	}
+
+	if (fromUserId === toUserId) {
+		return res.status(400).send({
+			message: "You cannot review connection request of yourself",
+		});
+	}
+
+	const ALLOWED_PARAMS = ["accepted", "rejected"];
+	if (!ALLOWED_PARAMS?.includes(status)) {
+		return res.status(400).send({
+			message: "Invalid status type: " + status,
+		});
+	}
+};
+
 module.exports = {
 	validateSignUp,
 	validateProfileUpdate,
 	validateSendConnection,
+	validateReviewConnection,
 };
