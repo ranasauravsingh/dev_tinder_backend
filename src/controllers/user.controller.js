@@ -1,3 +1,4 @@
+const { handleError } = require("../helpers/common_functions");
 const Connections = require("../models/connection.schema");
 const Users = require("../models/user.schema");
 
@@ -23,9 +24,7 @@ const receivedConnectionRequest = async (req, res) => {
 			data: connectionRequest,
 		});
 	} catch (err) {
-		res.status(400).send({
-			message: `Something went wrong: ${err?.message}`,
-		});
+		handleError(req, res, err);
 	}
 };
 
@@ -63,9 +62,7 @@ const userConnections = async (req, res) => {
 			data: connectionsData,
 		});
 	} catch (err) {
-		res.status(400).send({
-			message: `Something went wrong: ${err?.message}`,
-		});
+		handleError(req, res, err);
 	}
 };
 
@@ -119,9 +116,7 @@ const userFeed = async (req, res) => {
 			data: userFeedList,
 		});
 	} catch (err) {
-		res.status(400).send({
-			message: `Something went wrong: ${err?.message}`,
-		});
+		handleError(req, res, err);
 	}
 };
 

@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const Users = require("../models/user.schema");
+const { handleError } = require("../helpers/common_functions");
 
 const userAuth = async (req, res, next) => {
 	try {
@@ -26,9 +27,7 @@ const userAuth = async (req, res, next) => {
 		req.user = fetchUser;
 		next();
 	} catch (err) {
-		res.status(400).send({
-			message: `Something went wrong: ${err?.message}`,
-		});
+		handleError(req, res, err);
 	}
 };
 

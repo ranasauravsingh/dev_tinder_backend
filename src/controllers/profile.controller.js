@@ -1,3 +1,4 @@
+const { handleError } = require("../helpers/common_functions");
 const { validateProfileUpdate } = require("../helpers/validation");
 
 const fetchProfile = async (req, res) => {
@@ -5,9 +6,7 @@ const fetchProfile = async (req, res) => {
 		const fetchUser = req.user;
 		res.send(fetchUser);
 	} catch (err) {
-		res.status(400).send({
-			message: `Something went wrong: ${err?.message}`,
-		});
+		handleError(req, res, err);
 	}
 };
 
@@ -29,9 +28,7 @@ const updateProfile = async (req, res) => {
 			user: loggedInUser,
 		});
 	} catch (err) {
-		res.status(400).send({
-			message: `Something went wrong: ${err?.message}`,
-		});
+		handleError(req, res, err);
 	}
 };
 
@@ -70,9 +67,7 @@ const updateUserPassword = async (req, res) => {
 			message: "Password updated successfully",
 		});
 	} catch (err) {
-		res.status(400).send({
-			message: `Something went wrong: ${err?.message}`,
-		});
+		handleError(req, res, err);
 	}
 };
 

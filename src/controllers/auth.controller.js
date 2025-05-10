@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 
 const { validateSignUp } = require("../helpers/validation");
 const Users = require("../models/user.schema");
+const { handleError } = require("../helpers/common_functions");
 
 const userRegistration = async (req, res) => {
 	const { firstName, age, emailId, password } = req.body;
@@ -20,9 +21,7 @@ const userRegistration = async (req, res) => {
 			message: "User created successfully",
 		});
 	} catch (err) {
-		res.status(400).send({
-			message: `Something went wrong: ${err?.message}`,
-		});
+		handleError(req, res, err);
 	}
 };
 
@@ -53,9 +52,7 @@ const userLogin = async (req, res) => {
 			message: "Login Successful",
 		});
 	} catch (err) {
-		res.status(400).send({
-			message: `Something went wrong: ${err?.message}`,
-		});
+		handleError(req, res, err);
 	}
 };
 

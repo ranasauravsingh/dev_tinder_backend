@@ -1,3 +1,4 @@
+const { handleError } = require("../helpers/common_functions");
 const {
 	validateSendConnection,
 	validateReviewConnection,
@@ -45,9 +46,7 @@ const sendConnectionRequest = async (req, res) => {
 			data: connectionData,
 		});
 	} catch (err) {
-		res.status(400).send({
-			message: `Something went wrong: ${err?.message}`,
-		});
+		handleError(req, res, err);
 	}
 };
 
@@ -85,9 +84,7 @@ const reviewConnectionRequest = async (req, res) => {
 			data: connectionData,
 		});
 	} catch (err) {
-		res.status(400).send({
-			message: `Something went wrong: ${err?.message}`,
-		});
+		handleError(req, res, err);
 	}
 };
 
