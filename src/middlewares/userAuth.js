@@ -7,8 +7,8 @@ const userAuth = async (req, res, next) => {
 		const { token } = req.cookies;
 
 		if (!token) {
-			return res.status(400).send({
-				message: "Token not found",
+			return res.status(401).send({
+				message: "Token not found, please login again",
 			});
 		}
 
