@@ -1,5 +1,7 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
+const dotenv = require("dotenv");
 
 //? DB Connection
 const connectDB = require("./config/database");
@@ -12,6 +14,15 @@ const userRouter = require("./routes/user.routing");
 
 const app = express();
 
+//? Fetching ENV variables
+dotenv.config({
+	path: "./.env",
+});
+
+app.use(cors({
+	origin: process.env.FRONTEND_URL, //? React App URL
+	credentials: true, //? Allow cookies to be sent with requests
+})); //? Middleware to enable CORS
 app.use(express.json()); //? Middleware to parse JSON data from request body
 app.use(cookieParser()); //? Middleware to parse cookies from request headers
 
