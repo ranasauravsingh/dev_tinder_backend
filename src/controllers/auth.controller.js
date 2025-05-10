@@ -49,6 +49,7 @@ const userLogin = async (req, res) => {
 			expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
 		});
 		res.send({
+			data: user,
 			message: "Login Successful",
 		});
 	} catch (err) {
@@ -57,10 +58,10 @@ const userLogin = async (req, res) => {
 };
 
 const userLogout = async (req, res) => {
-    res.cookie("token", null, { expires: new Date(Date.now()) });
-    res.send({
-        message: `Logout Successful`,
-    });
+	res.cookie("token", null, { expires: new Date(Date.now()) });
+	res.send({
+		message: `Logout Successful`,
+	});
 };
 
 module.exports = {
