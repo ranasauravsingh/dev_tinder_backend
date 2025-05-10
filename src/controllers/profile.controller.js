@@ -4,7 +4,7 @@ const { validateProfileUpdate } = require("../helpers/validation");
 const fetchProfile = async (req, res) => {
 	try {
 		const fetchUser = req.user;
-		res.send(fetchUser);
+		res.send({ data: fetchUser, message: "User fetched successfully" });
 	} catch (err) {
 		handleError(req, res, err);
 	}
