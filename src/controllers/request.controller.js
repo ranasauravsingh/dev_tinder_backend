@@ -42,7 +42,7 @@ const sendConnectionRequest = async (req, res) => {
 		const connectionData = await connectionRequest.save();
 
 		res.send({
-			message: "Connection request sent successfully",
+			message: status === "ignored" ? "Connection ignored successfully" : "Connection request sent successfully",
 			data: connectionData,
 		});
 	} catch (err) {
