@@ -25,7 +25,7 @@ const updateProfile = async (req, res) => {
 
 		res.send({
 			message: "Profile updated successfully",
-			user: loggedInUser,
+			data: loggedInUser,
 		});
 	} catch (err) {
 		handleError(req, res, err);
