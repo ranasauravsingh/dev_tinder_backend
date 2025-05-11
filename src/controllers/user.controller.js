@@ -2,7 +2,7 @@ const { handleError } = require("../helpers/common_functions");
 const Connections = require("../models/connection.schema");
 const Users = require("../models/user.schema");
 
-const USER_SAFE_DATA = ["firstName", "lastName", "photoUrl", "gender"];
+const USER_SAFE_DATA = ["firstName", "lastName", "photoUrl", "gender", "age", "about"];
 
 const receivedConnectionRequest = async (req, res) => {
 	try {
