@@ -1,6 +1,6 @@
 const validateSignUp = (req, res) => {
 	const userData = req.body;
-	const ALLOWED_KEYS = ["firstName", "emailId", "password", "age"];
+	const ALLOWED_KEYS = ["firstName", "emailId", "password", "lastName"];
 	const isValidUserPayload = Object.keys(userData).every((key) =>
 		ALLOWED_KEYS.includes(key)
 	);
@@ -15,11 +15,11 @@ const validateSignUp = (req, res) => {
 		!userData?.firstName ||
 		!userData?.emailId ||
 		!userData?.password ||
-		!userData?.age
+		!userData?.lastName
 	) {
 		return res.status(400).send({
 			message:
-				"Please provide all required fields [firstName, emailId, password, age]",
+				"Please provide all required fields [firstName, emailId, password, lastName]",
 		});
 	}
 
@@ -31,10 +31,10 @@ const validateSignUp = (req, res) => {
 		});
 	}
 
-	const isAgeValid = userData?.age >= 18;
-	if (!isAgeValid) {
+	const isLastNameValid = userData?.lastName?.length <= 20;
+	if (!isLastNameValid) {
 		return res.status(400).send({
-			message: "Age should be greater than or equal to 18",
+			message: "First name should be less than 20 characters",
 		});
 	}
 };

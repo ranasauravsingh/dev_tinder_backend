@@ -5,20 +5,26 @@ const Users = require("../models/user.schema");
 const { handleError } = require("../helpers/common_functions");
 
 const userRegistration = async (req, res) => {
-	const { firstName, age, emailId, password } = req.body;
+	const { firstName, lastName, emailId, password } = req.body;
 	try {
 		validateSignUp(req, res);
 		const passwordHash = await bcrypt.hash(password, 10);
 
 		const user = new Users({
 			firstName,
-			age,
+			lastName,
 			emailId,
 			password: passwordHash,
 		});
-		await user.save();
+		const savedUser = await user.save();
+		const token = await savedUser?.getJWT();
+
+		res.cookie("token", token, {
+			expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+		});
 		res.status(200).send({
 			message: "User created successfully",
+			data: savedUser,
 		});
 	} catch (err) {
 		handleError(req, res, err);
