@@ -14,7 +14,7 @@ const userAuth = async (req, res, next) => {
 
 		const { _id: userId } = await jwt.verify(
 			token,
-			"THIS_IS_JWT_SECRET_KEY"
+			process.env.JWT_SECRET_KEY
 		);
 
 		if (!userId) {
