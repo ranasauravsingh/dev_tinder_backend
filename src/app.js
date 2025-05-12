@@ -34,9 +34,10 @@ app.use(`/`, authRouter);
 
 connectDB()
 	.then(() => {
+		const PORT = process.env.PORT;
 		console.log("Connected to MongoDB successfully");
-		app?.listen(7777, (req, res) => {
-			console.log("Server is running on port 7777");
+		app?.listen(PORT, (req, res) => {
+			console.log(`Server is running on port ${PORT}`);
 		});
 	})
 	.catch((err) => {
