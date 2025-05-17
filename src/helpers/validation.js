@@ -160,9 +160,29 @@ const validateReviewConnection = (req, res) => {
 	}
 };
 
+const validateChatFetching = (req, res) => {
+	const userId = req?.user?._id;
+	const { targetUserId } = req?.params;
+
+	if (!userId && !targetUserId) {
+		return res.status(400).send({
+			message:
+				"Please provide all required fields [userId, targetUserId]",
+		});
+	}
+
+	if(userId?.toString() === targetUserId?.toString()) {
+		return res.status(400).send({
+			message:
+				"Can not fetch chats of own user id",
+		});
+	}
+};
+
 module.exports = {
 	validateSignUp,
 	validateProfileUpdate,
 	validateSendConnection,
 	validateReviewConnection,
+	validateChatFetching,
 };
