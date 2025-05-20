@@ -75,7 +75,9 @@ const initializeSocket = (httpServer) => {
 					lastName,
 					_id: userId,
 				});
-			} catch (err) {}
+			} catch (err) {
+				throw new Error(`Error occurred: ${err}`);
+			}
 		});
 
 		socket.on("disconnect", () => {});
