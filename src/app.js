@@ -27,6 +27,7 @@ dotenv.config({
 app.use(cors({
 	origin: process.env.FRONTEND_URL, //? React App URL
 	credentials: true, //? Allow cookies to be sent with requests
+	allowedHeaders: ["Content-Type", "Authorization"], //? Allowed headers
 })); //? Middleware to enable CORS
 app.use(express.json()); //? Middleware to parse JSON data from request body
 app.use(cookieParser()); //? Middleware to parse cookies from request headers
