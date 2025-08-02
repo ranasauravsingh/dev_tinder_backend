@@ -5,6 +5,8 @@ const { handleError } = require("../helpers/common_functions");
 const userAuth = async (req, res, next) => {
 	try {
 		const { token } = req.cookies;
+		console.log.log("req", req);
+		console.log("Token from cookies:", token);
 
 		if (!token) {
 			return res.status(401).send({
