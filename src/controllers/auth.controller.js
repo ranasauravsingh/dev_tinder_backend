@@ -52,7 +52,7 @@ const userLogin = async (req, res) => {
 		const token = await user?.getJWT();
 
 		res.cookie("token", token, {
-			expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
+			maxAge: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
 			httpOnly: true, // Prevents client-side JS access
 			secure: true, // Required for HTTPS on Render
 			sameSite: "none", // Allows cross-origin cookie sending
