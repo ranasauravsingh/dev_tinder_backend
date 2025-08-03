@@ -20,7 +20,10 @@ const userRegistration = async (req, res) => {
 		const token = await savedUser?.getJWT();
 
 		res.cookie("token", token, {
-			expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+			expires: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // 2 days
+			httpOnly: true, // Prevents client-side JS access
+			secure: true, // Required for HTTPS on Render
+			sameSite: "none", // Allows cross-origin cookie sending
 		});
 		res.status(200).send({
 			message: "User created successfully",
@@ -67,7 +70,7 @@ const userLogin = async (req, res) => {
 };
 
 const userLogout = async (req, res) => {
-	res.cookie("token", null, { expires: new Date(Date.now()) });
+	res.cookie("token", null, { expires: new Date(Date.now()), httpOnly: true, secure: true, sameSite: "none" });
 	res.send({
 		message: `Logout Successful`,
 	});
