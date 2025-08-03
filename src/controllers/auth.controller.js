@@ -59,6 +59,7 @@ const userLogin = async (req, res) => {
 			httpOnly: true, // Prevents client-side JS access
 			secure: true, // Required for HTTPS on Render
 			sameSite: "none", // Allows cross-origin cookie sending
+			path: '/',
 		});
 		res.send({
 			data: user,
