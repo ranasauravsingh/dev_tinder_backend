@@ -28,6 +28,8 @@ app.use(express.json()); //? Middleware to parse JSON data from request body
 app.use(express.urlencoded({ extended: true })); //? Middleware to parse URL-encoded data from request body
 app.use(cookieParser()); //? Middleware to parse cookies from request headers
 
+app.set('trust proxy', 1); //? Trust first proxy
+
 app.use(cors({
 	origin: process.env.FRONTEND_URL, //? React App URL
 	credentials: true, //? Allow cookies to be sent with requests
