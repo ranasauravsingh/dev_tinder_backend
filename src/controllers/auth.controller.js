@@ -36,6 +36,7 @@ const userRegistration = async (req, res) => {
 
 const userLogin = async (req, res) => {
 	const { emailId, password } = req.body;
+	console.log("Request protocol:", req?.protocol);
 
 	try {
 		const user = await Users.findOne({ emailId: emailId });
@@ -59,7 +60,7 @@ const userLogin = async (req, res) => {
 			httpOnly: true, // Prevents client-side JS access
 			secure: true, // Required for HTTPS on Render
 			sameSite: "none", // Allows cross-origin cookie sending
-			path: '/',
+			path: "/",
 		});
 		res.send({
 			data: user,
@@ -71,7 +72,12 @@ const userLogin = async (req, res) => {
 };
 
 const userLogout = async (req, res) => {
-	res.cookie("token", null, { expires: new Date(Date.now()), httpOnly: true, secure: true, sameSite: "none" });
+	res.cookie("token", null, {
+		expires: new Date(Date.now()),
+		httpOnly: true,
+		secure: true,
+		sameSite: "none",
+	});
 	res.send({
 		message: `Logout Successful`,
 	});
