@@ -35,6 +35,7 @@ app.use(cors({
 	credentials: true, //? Allow cookies to be sent with requests
 	methods: ["GET", "POST", "PATCH"], //? Allowed methods
 	allowedHeaders: ["Content-Type", "Authorization"], //? Allowed headers
+	exposedHeaders: ["Set-Cookie"], //? Exposed headers
 })); //? Middleware to enable CORS
 
 //? API's

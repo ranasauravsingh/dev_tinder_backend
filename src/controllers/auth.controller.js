@@ -61,6 +61,7 @@ const userLogin = async (req, res) => {
 			secure: true, // Required for HTTPS on Render
 			sameSite: "none", // Allows cross-origin cookie sending
 			path: "/",
+			partitioned: true,
 		});
 		res.send({
 			data: user,
